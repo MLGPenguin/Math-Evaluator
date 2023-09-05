@@ -14,6 +14,7 @@ public class Value {
 
     public boolean isInt(){ return val%1 == 0; }
     public int intValue() { return (int)val; }
+    public int roundToInt() { return (int) Math.round(val); }
     public double doubleValue(){ return val; }
 
     @Override
