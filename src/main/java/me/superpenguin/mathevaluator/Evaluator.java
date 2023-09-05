@@ -1,4 +1,4 @@
-package me.superpenguin;
+package me.superpenguin.mathevaluator;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

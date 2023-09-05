@@ -1,3 +1,5 @@
 .idea/
 target/
 **/Main.java
+.gradle/
+build/

@@ -1,4 +1,4 @@
-package me.superpenguin;
+package me.superpenguin.mathevaluator;
 
 public class Value {
 
