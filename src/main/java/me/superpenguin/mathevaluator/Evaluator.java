@@ -5,8 +5,10 @@ import java.util.regex.Pattern;
 
 public class Evaluator {
 
+    private static String NUMBER_REGEX = "-?[0-9]+\\.?[0-9]*";
+
     public static Value eval(String expression){
-        String exp = expression.replaceAll(" ", "");
+        String exp = expression.replaceAll(" ", "").replaceAll("(" + NUMBER_REGEX + ")\\(", "$1*(");
         exp = calculateBrackets(exp);
         exp = calculate(exp, "\\^");
         exp = calculate(exp, "\\*|/");
@@ -34,7 +36,7 @@ public class Evaluator {
     }
 
     private static String calculate(String expression, String operators){
-        Pattern p = Pattern.compile("(-?[0-9]+\\.?[0-9]*)(" + operators + ")(-?[0-9]+\\.?[0-9]*)");
+        Pattern p = Pattern.compile("(" + NUMBER_REGEX + ")(" + operators + ")(" + NUMBER_REGEX + ")");
         Matcher m = p.matcher(expression);
         while (m.find()){
             expression = m.replaceFirst(operate(m));
