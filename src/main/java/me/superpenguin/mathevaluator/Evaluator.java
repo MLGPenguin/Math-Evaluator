@@ -22,7 +22,7 @@ public class Evaluator {
             case "+": val = a1+a2; break;
             case "-": val = a1-a2; break;
             case "*": val = a1*a2; break;
-            case "/": val = (double)a1/a2; break;
+            case "/": val = a1/a2; break;
             case "^": val = Math.pow(a1, a2); break;
             default: val = 0;
         };
@@ -34,7 +34,7 @@ public class Evaluator {
     }
 
     private static String calculate(String expression, String operators){
-        Pattern p = Pattern.compile("([0-9]+\\.?[0-9]*)(" + operators + ")([0-9]+\\.?[0-9]*)");
+        Pattern p = Pattern.compile("(-?[0-9]+\\.?[0-9]*)(" + operators + ")(-?[0-9]+\\.?[0-9]*)");
         Matcher m = p.matcher(expression);
         while (m.find()){
             expression = m.replaceFirst(operate(m));
