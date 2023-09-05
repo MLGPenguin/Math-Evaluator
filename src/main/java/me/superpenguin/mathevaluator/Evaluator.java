@@ -6,8 +6,8 @@ import java.util.regex.Pattern;
 public class Evaluator {
 
     public static Value eval(String expression){
-        String exp = expression;
-        exp = calculateBrackets(expression);
+        String exp = expression.replaceAll(" ", "");
+        exp = calculateBrackets(exp);
         exp = calculate(exp, "\\^");
         exp = calculate(exp, "\\*|/");
         exp = calculate(exp, "-|\\+");
