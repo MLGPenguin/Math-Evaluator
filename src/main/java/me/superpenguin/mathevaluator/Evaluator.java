@@ -3,17 +3,36 @@ package me.superpenguin.mathevaluator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * API Class for the evaluator, written in Java for optimal compabibility.
+ *
+ */
 public class Evaluator {
+
+    public static class InvalidSyntaxException extends RuntimeException {
+        public InvalidSyntaxException(String msg) { super(msg); }
+        public InvalidSyntaxException() { super(""); }
+    }
+
 
     private static String NUMBER_REGEX = "-?[0-9]+\\.?[0-9]*";
 
-    public static Value eval(String expression){
-        String exp = expression.replaceAll(" ", "").replaceAll("(" + NUMBER_REGEX + ")\\(", "$1*(");
+    /**
+     *
+     * @param expression
+     * @throws InvalidSyntaxException if the expression is improperly formatted
+     * @return
+     */
+    public static Value eval(String expression) {
+        String exp = expression
+                .replaceAll(" ", "")
+                .replaceAll("(" + NUMBER_REGEX + ")\\(", "$1*(");
         exp = calculateBrackets(exp);
         exp = calculate(exp, "\\^");
         exp = calculate(exp, "\\*|/");
         exp = calculate(exp, "-|\\+");
-        return new Value(Double.parseDouble(exp));
+        double result = Double.parseDouble(exp);
+        return new Value(result);
     }
 
     private static String operate(String n1, String operator, String n2){
