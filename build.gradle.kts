@@ -1,6 +1,7 @@
 plugins {
     java
     `maven-publish`
+    kotlin("jvm") version "1.9.0"
 }
 
 repositories {
@@ -15,7 +16,7 @@ dependencies {
 group = "me.superpenguin"
 version = "1.0.0"
 description = "Evaluates mathematical expressions using regex"
-java.sourceCompatibility = JavaVersion.VERSION_1_8
+java.sourceCompatibility = JavaVersion.VERSION_17
 
 publishing {
     publications.create<MavenPublication>("maven") {
@@ -29,4 +30,8 @@ tasks.withType<JavaCompile>() {
 
 tasks.withType<Javadoc>() {
     options.encoding = "UTF-8"
+}
+
+kotlin {
+    jvmToolchain(17)
 }
