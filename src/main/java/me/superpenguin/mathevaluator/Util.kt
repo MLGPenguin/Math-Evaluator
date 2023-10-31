@@ -8,6 +8,13 @@ internal object Util {
     // letters, consecutive operators, operators closing brackets and ending strings
     private val INVALID_FORMAT = Regex("(?i)[^\\d$OPERATORS().]|[.+*/]{2,}|[$OPERATORS]$|[$OPERATORS][)]|^[.+*/)]")
 
-    fun isValidSyntax(expression: String) = !INVALID_FORMAT.containsMatchIn(expression)
-            && expression.count { it == '(' } == expression.count { it == ')' }
+    fun isValidSyntax(expression: String, sanitised: String = sanitise(expression)) = !INVALID_FORMAT.containsMatchIn(sanitised)
+            && sanitised.count { it == '(' } == sanitised.count { it == ')' }
+
+    private val NUMBER_BEFORE_BRACKET_REGEX = Regex("($NUMBER_REGEX)\\(")
+
+    fun sanitise(expression: String) = expression
+        .replace(" ", "")
+        .replace("--", "+")
+        .replace(NUMBER_BEFORE_BRACKET_REGEX, "$1*(");
 }

@@ -25,17 +25,14 @@ public class Evaluator {
      * @return
      */
     public static Value eval(String expression) {
-        String exp = expression
-                .replaceAll(" ", "")
-                .replaceAll("--", "+")
-                .replaceAll("(" + NUMBER_REGEX + ")\\(", "$1*(");
-        if (!isValidSyntax(exp)) throw new InvalidSyntaxException();
+        String exp = util.sanitise(expression);
+        if (!util.isValidSyntax(exp, exp)) throw new InvalidSyntaxException();
 
         exp = calculateBrackets(exp);
         exp = calculate(exp, "\\^");
         exp = calculate(exp, "\\*|/");
         exp = calculate(exp, "-|\\+");
-        double result = 0.0;
+        double result;
         try {
             result = Double.parseDouble(exp);
         } catch (NumberFormatException ex) {
@@ -44,7 +41,7 @@ public class Evaluator {
         return new Value(result);
     }
 
-    public static boolean isValidSyntax(String exp) { return util.isValidSyntax(exp); }
+    public static boolean isValidSyntax(String exp) { return util.isValidSyntax(exp, util.sanitise(exp)); }
 
     private static String operate(String n1, String operator, String n2){
         double val;
