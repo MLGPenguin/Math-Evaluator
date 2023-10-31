@@ -16,5 +16,6 @@ internal object Util {
     fun sanitise(expression: String) = expression
         .replace(" ", "")
         .replace("--", "+")
-        .replace(NUMBER_BEFORE_BRACKET_REGEX, "$1*(");
+        .replace(NUMBER_BEFORE_BRACKET_REGEX, "$1*(")
+        .replace("+-", "-")
 }
