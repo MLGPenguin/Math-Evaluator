@@ -8,7 +8,7 @@ public class EvaluatorTest {
 
     public Value eval(String exp) { return Evaluator.eval(exp); }
     
-    private static double DELTA = 0.0001;
+    private static final double DELTA = 0.0001;
 
     @Test
     public void testSimpleIntExpressionsWithAdditionAndSubtraction() {
@@ -98,6 +98,7 @@ public class EvaluatorTest {
         assertInvalidSyntax("--4");
         assertInvalidSyntax("434+/3");
         assertInvalidSyntax("434//3");
+        assertInvalidSyntax("50 --- 5");
     }
 
 
