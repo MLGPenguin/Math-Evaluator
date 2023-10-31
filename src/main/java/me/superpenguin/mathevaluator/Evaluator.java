@@ -14,6 +14,7 @@ public class Evaluator {
         public InvalidSyntaxException() { super(""); }
     }
 
+    private static Util util = Util.INSTANCE;
 
     private static String NUMBER_REGEX = "-?[0-9]+\\.?[0-9]*";
 
@@ -26,14 +27,24 @@ public class Evaluator {
     public static Value eval(String expression) {
         String exp = expression
                 .replaceAll(" ", "")
+                .replaceAll("--", "+")
                 .replaceAll("(" + NUMBER_REGEX + ")\\(", "$1*(");
+        if (!isValidSyntax(exp)) throw new InvalidSyntaxException();
+
         exp = calculateBrackets(exp);
         exp = calculate(exp, "\\^");
         exp = calculate(exp, "\\*|/");
         exp = calculate(exp, "-|\\+");
-        double result = Double.parseDouble(exp);
+        double result = 0.0;
+        try {
+            result = Double.parseDouble(exp);
+        } catch (NumberFormatException ex) {
+            throw new InvalidSyntaxException();
+        }
         return new Value(result);
     }
+
+    public static boolean isValidSyntax(String exp) { return util.isValidSyntax(exp); }
 
     private static String operate(String n1, String operator, String n2){
         double val;
