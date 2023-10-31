@@ -73,6 +73,18 @@ public class EvaluatorTest {
         assertEquals(eval("-3.5*4^2.5+10^-2").doubleValue(), -111.99, DELTA);
     }
 
+    @Test
+    public void testNegativeExponents() {
+        assertEquals(eval("3^-2").doubleValue(), 1/9.0, DELTA);
+    }
+
+    @Test
+    public void testDoubleNegatives() {
+        assertEquals(eval("-3.5--5").doubleValue(), 1.5, DELTA);
+        assertEquals(eval("-4^(-3--4)").intValue(), -4);
+        assertEquals(eval("50 +- 5").intValue(), 45);
+    }
+
     private void assertInvalidSyntax(String syntax) { assertFalse(Evaluator.isValidSyntax(syntax)); }
 
     @Test
