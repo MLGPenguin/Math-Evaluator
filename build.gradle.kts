@@ -1,7 +1,6 @@
 plugins {
-    java
-    `maven-publish`
     kotlin("jvm") version "1.9.0"
+    `maven-publish`
 }
 
 repositories {
@@ -16,7 +15,6 @@ dependencies {
 group = "me.superpenguin"
 version = "1.1.0"
 description = "Evaluates mathematical expressions using regex"
-java.sourceCompatibility = JavaVersion.VERSION_17
 
 publishing {
     publications.create<MavenPublication>("maven") {
