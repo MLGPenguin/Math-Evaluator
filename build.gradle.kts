@@ -14,7 +14,7 @@ dependencies {
 
 
 group = "me.superpenguin"
-version = "1.0.0"
+version = "1.1.0"
 description = "Evaluates mathematical expressions using regex"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
