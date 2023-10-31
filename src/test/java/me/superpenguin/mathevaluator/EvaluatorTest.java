@@ -6,7 +6,7 @@ import static org.junit.Assert.*;
 
 public class EvaluatorTest {
 
-    public Value eval(String exp) { return  Evaluator.eval(exp); }
+    public Value eval(String exp) { return Evaluator.eval(exp); }
     
     private static double DELTA = 0.0001;
 
@@ -72,5 +72,21 @@ public class EvaluatorTest {
         assertEquals(eval("2.5^3").doubleValue(), 15.625, DELTA);
         assertEquals(eval("-3.5*4^2.5+10^-2").doubleValue(), -111.99, DELTA);
     }
+
+    private void assertInvalidSyntax(String syntax) { assertFalse(Evaluator.isValidSyntax(syntax)); }
+
+    @Test
+    public void testInvalidSyntax() {
+        assertInvalidSyntax("HELLO 3+3");
+        assertInvalidSyntax("HELLO 3++3");
+        assertInvalidSyntax("43+");
+        assertInvalidSyntax("43++4");
+        assertInvalidSyntax("(43+4");
+        assertInvalidSyntax("43+4)");
+        assertInvalidSyntax("--4");
+        assertInvalidSyntax("434+/3");
+        assertInvalidSyntax("434//3");
+    }
+
 
 }
