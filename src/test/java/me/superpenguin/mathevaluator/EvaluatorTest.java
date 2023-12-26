@@ -99,7 +99,32 @@ public class EvaluatorTest {
         assertInvalidSyntax("434+/3");
         assertInvalidSyntax("434//3");
         assertInvalidSyntax("50 --- 5");
+        assertInvalidSyntax("siin(4)");
     }
 
+    @Test
+    public void testPrefixFunctions() {
+        assertEquals(eval("PI").doubleValue(), Math.PI, DELTA);
+        assertEquals(eval("sin(pi)").intValue(), 0);
+        assertEquals(eval("cos(pi)").intValue(), -1);
+        assertEquals(eval("radians(180)").doubleValue(), Math.PI, DELTA);
+        assertEquals(eval("sin(radians(180))").intValue(), 0);
+        assertEquals(eval("sin(2pi)").intValue(), 0);
+    }
 
+    public void assertEqualsDouble(String expression, double outcome) { assertEquals(eval(expression).doubleValue(), outcome, DELTA); }
+    public void assertEqualsInt(String exp, int outcome) { assertEquals(eval(exp).intValue(), outcome); }
+    @Test
+    public void testPrefixFunctionsAdvanced() {
+        assertEqualsDouble("-2.5^cos(-3^1-1+4sin(pi/2))", -2.5);
+        assertEqualsDouble("-2.5^cos(-3^1-1+4sin(pi - radians(90)))", -2.5);
+        assertEqualsDouble("4cos(pi)/4", -1);
+        assertEqualsDouble("sqrt(144)", 12);
+        assertEqualsDouble("sqrt(12.5^2)", 12.5);
+    }
+
+    @Test
+    public void testSuffixSanitisationOperators() {
+        assertEqualsInt("3!", 6);
+    }
 }

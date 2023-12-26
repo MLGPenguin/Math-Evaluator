@@ -26,8 +26,9 @@ public class Evaluator {
      */
     public static Value eval(String expression) {
         String exp = util.sanitise(expression);
-        if (!util.isValidSyntax(exp, exp)) throw new InvalidSyntaxException();
+        if (!util.isValidSyntax(exp)) throw new InvalidSyntaxException();
 
+        exp = calcualtePrefixFunctionso(exp);
         exp = calculateBrackets(exp);
         exp = calculate(exp, "\\^");
         exp = calculate(exp, "\\*|/");
@@ -41,7 +42,7 @@ public class Evaluator {
         return new Value(result);
     }
 
-    public static boolean isValidSyntax(String exp) { return util.isValidSyntax(exp, util.sanitise(exp)); }
+    public static boolean isValidSyntax(String exp) { return util.isValidSyntax(exp); }
 
     private static String operate(String n1, String operator, String n2){
         double val;
@@ -72,15 +73,24 @@ public class Evaluator {
         return expression;
     }
 
+    private static final Pattern brackets = Pattern.compile("\\(([^()]+)\\)");
     private static String calculateBrackets(String exp){
-        Pattern p = Pattern.compile("\\(([^()]+)\\)");
-        Matcher m = p.matcher(exp);
+        Matcher m = brackets.matcher(exp);
         while(m.find()){
             exp = m.replaceFirst(Evaluator.eval(m.group(1)).toString());
-            m = p.matcher(exp);
+            m = brackets.matcher(exp);
         }
         return exp;
     }
 
+    private static final Pattern prefixFunctions = Pattern.compile("(?i)([a-z]+)\\((.+)\\)");
+    private static String calcualtePrefixFunctionso(String exp) {
+        Matcher m = prefixFunctions.matcher(exp);
+        while(m.find()){
+            exp = m.replaceFirst(String.valueOf(util.parsePrefixFunction(m.group(1), Evaluator.eval(m.group(2)).doubleValue())));
+            m = prefixFunctions.matcher(exp);
+        }
+        return exp;
+    }
 
 }
