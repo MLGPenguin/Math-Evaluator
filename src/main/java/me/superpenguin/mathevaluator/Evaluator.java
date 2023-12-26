@@ -14,9 +14,9 @@ public class Evaluator {
         public InvalidSyntaxException() { super(""); }
     }
 
-    private static Util util = Util.INSTANCE;
+    private static final Util util = Util.INSTANCE;
 
-    private static String NUMBER_REGEX = "-?[0-9]+\\.?[0-9]*";
+    private static final String NUMBER_REGEX = "-?[0-9]+\\.?[0-9]*";
 
     /**
      *
@@ -28,7 +28,7 @@ public class Evaluator {
         String exp = util.sanitise(expression);
         if (!util.isValidSyntax(exp)) throw new InvalidSyntaxException();
 
-        exp = calcualtePrefixFunctionso(exp);
+        exp = calcualtePrefixFunctions(exp);
         exp = calculateBrackets(exp);
         exp = calculate(exp, "\\^");
         exp = calculate(exp, "\\*|/");
@@ -84,7 +84,7 @@ public class Evaluator {
     }
 
     private static final Pattern prefixFunctions = Pattern.compile("(?i)([a-z]+)\\((.+)\\)");
-    private static String calcualtePrefixFunctionso(String exp) {
+    private static String calcualtePrefixFunctions(String exp) {
         Matcher m = prefixFunctions.matcher(exp);
         while(m.find()){
             exp = m.replaceFirst(String.valueOf(util.parsePrefixFunction(m.group(1), Evaluator.eval(m.group(2)).doubleValue())));

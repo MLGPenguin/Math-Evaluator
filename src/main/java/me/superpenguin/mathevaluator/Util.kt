@@ -12,7 +12,7 @@ internal object Util {
     private val INVALID_FORMAT = Regex("(?i)[^\\d$OPERATORS().]|[.+*/]{2,}|[$OPERATORS]$|[$OPERATORS][)]|^[.+*/)]|-{3,}")
 
     fun isValidSyntax(expression: String): Boolean {
-        val withoutPrefixes = prefixFunctions.keys.fold(expression) { acc, value -> acc.replace(value, "") }
+        val withoutPrefixes = prefixFunctions.keys.fold(expression.lowercase()) { acc, value -> acc.replace(value, "") }
         val sanitised = sanitise(withoutPrefixes)
         return !INVALID_FORMAT.containsMatchIn(sanitised) && sanitised.count { it == '(' } == sanitised.count { it == ')' }
     }
