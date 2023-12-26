@@ -116,7 +116,8 @@ public class EvaluatorTest {
         assertEqualsInt("floor(pi)", 3);
         assertEqualsInt("floor(389.3)", 389);
         assertEqualsInt("ceil(pi)", 4);
-        assertEqualsInt("ceil(389.3)", 390);
+        assertEqualsInt("CeIl(389.3)", 390);
+        assertEqualsInt("abs(-3)", 3);
     }
 
     public void assertEqualsDouble(String expression, double outcome) { assertEquals(eval(expression).doubleValue(), outcome, DELTA); }

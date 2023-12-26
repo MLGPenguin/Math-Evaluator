@@ -43,7 +43,9 @@ internal object Util {
         "tan" to ::tan,
         "sqrt" to ::sqrt,
         "floor" to ::floor,
-        "ceil" to ::ceil
+        "ceil" to ::ceil,
+        "absolute" to ::abs,
+        "abs" to ::abs
     )
 
     fun parsePrefixFunction(function: String, value: Double): Double? = prefixFunctions[function]?.invoke(value)
