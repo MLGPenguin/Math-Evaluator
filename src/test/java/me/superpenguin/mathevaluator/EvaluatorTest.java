@@ -114,6 +114,7 @@ public class EvaluatorTest {
 
     public void assertEqualsDouble(String expression, double outcome) { assertEquals(eval(expression).doubleValue(), outcome, DELTA); }
     public void assertEqualsInt(String exp, int outcome) { assertEquals(eval(exp).intValue(), outcome); }
+
     @Test
     public void testPrefixFunctionsAdvanced() {
         assertEqualsDouble("-2.5^cos(-3^1-1+4sin(pi/2))", -2.5);
@@ -126,5 +127,11 @@ public class EvaluatorTest {
     @Test
     public void testSuffixSanitisationOperators() {
         assertEqualsInt("3!", 6);
+        assertEqualsInt("1!", 1);
+        assertEqualsInt("0!", 1);
+        assertEqualsInt("4!", 24);
+        assertEqualsInt("3*4!", 72);
+        assertEqualsInt("4!/2", 12);
+        assertEqualsInt("10^2!", 100);
     }
 }

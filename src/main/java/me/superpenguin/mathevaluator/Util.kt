@@ -10,6 +10,7 @@ internal object Util {
     private const val NUMBER = "-?[0-9]+\\.?[0-9]*"
 
     private val NUMBER_REGEX = Regex(NUMBER)
+    private val FACTORIAL_REGEX = Regex("([0-9]+)!")
     // letters, consecutive operators, operators closing brackets and ending strings
     private val INVALID_FORMAT = Regex("(?i)[^\\d$OPERATORS().]|[.+*/]{2,}|[$OPERATORS]$|[$OPERATORS][)]|^[.+*/)]|-{3,}")
 
@@ -31,6 +32,7 @@ internal object Util {
         .replace(NUMBER_BEFORE_EXPRESSION_REGEX, "$1*$2")
         .replace("+-", "-")
         .replace("pi", Math.PI.toString())
+        .let { exp -> FACTORIAL_REGEX.replace(exp) { it.groupValues[1].toInt().factorial.toString() } }
 
 
     // Cannot contain "pi"
