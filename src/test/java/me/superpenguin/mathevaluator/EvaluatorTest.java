@@ -110,6 +110,13 @@ public class EvaluatorTest {
         assertEquals(eval("radians(180)").doubleValue(), Math.PI, DELTA);
         assertEquals(eval("sin(radians(180))").intValue(), 0);
         assertEquals(eval("sin(2pi)").intValue(), 0);
+        assertEqualsInt("degrees(pi)", 180);
+        assertEqualsInt("deg(pi)", 180);
+        assertEqualsInt("deg(2pi)", 360);
+        assertEqualsInt("floor(pi)", 3);
+        assertEqualsInt("floor(389.3)", 389);
+        assertEqualsInt("ceil(pi)", 4);
+        assertEqualsInt("ceil(389.3)", 390);
     }
 
     public void assertEqualsDouble(String expression, double outcome) { assertEquals(eval(expression).doubleValue(), outcome, DELTA); }
@@ -119,6 +126,7 @@ public class EvaluatorTest {
     public void testPrefixFunctionsAdvanced() {
         assertEqualsDouble("-2.5^cos(-3^1-1+4sin(pi/2))", -2.5);
         assertEqualsDouble("-2.5^cos(-3^1-1+4sin(pi - radians(90)))", -2.5);
+        assertEqualsDouble("-2.5^cos(-3^1-1+4sin(pi - rad(90)))", -2.5);
         assertEqualsDouble("4cos(pi)/4", -1);
         assertEqualsDouble("sqrt(144)", 12);
         assertEqualsDouble("sqrt(12.5^2)", 12.5);

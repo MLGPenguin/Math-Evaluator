@@ -1,9 +1,6 @@
 package me.superpenguin.mathevaluator
 
-import kotlin.math.cos
-import kotlin.math.sin
-import kotlin.math.sqrt
-import kotlin.math.tan
+import kotlin.math.*
 
 internal object Util {
     private const val OPERATORS = "-\\+*/\\^"
@@ -36,13 +33,18 @@ internal object Util {
 
 
     // Cannot contain "pi"
-    private val prefixFunctions = HashMap<String, (Double) -> Double>().apply {
-        put("radians", Math::toRadians)
-        put("sin", ::sin)
-        put("cos", ::cos)
-        put("tan", ::tan)
-        put("sqrt", ::sqrt)
-    }
+    private val prefixFunctions: Map<String, (Double) -> Double> = mapOf(
+        "radians" to Math::toRadians,
+        "rad" to Math::toRadians,
+        "degrees" to Math::toDegrees,
+        "deg" to Math::toDegrees,
+        "sin" to ::sin,
+        "cos" to ::cos,
+        "tan" to ::tan,
+        "sqrt" to ::sqrt,
+        "floor" to ::floor,
+        "ceil" to ::ceil
+    )
 
     fun parsePrefixFunction(function: String, value: Double): Double? = prefixFunctions[function]?.invoke(value)
 }
