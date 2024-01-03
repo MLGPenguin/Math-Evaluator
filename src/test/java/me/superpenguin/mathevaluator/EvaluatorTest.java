@@ -162,4 +162,10 @@ public class EvaluatorTest {
         assertEqualsInt("round(-3.5)", -4);
         assertEqualsInt("round(-3.4)", -3);
     }
+
+    @Test
+    public void invalidPrefixFunctionExpressions() {
+        assertThrows(Evaluator.InvalidSyntaxException.class, () -> eval("sqrt(-1)"));
+        assertThrows(Evaluator.InvalidSyntaxException.class, () -> eval("sqrt(1-2)"));
+    }
 }

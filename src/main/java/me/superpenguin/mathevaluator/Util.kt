@@ -49,5 +49,5 @@ internal object Util {
         "round" to ::round,
     )
 
-    fun parsePrefixFunction(function: String, value: Double): Double? = prefixFunctions[function]?.invoke(value)
+    fun parsePrefixFunction(function: String, value: Double): Double? = prefixFunctions[function]?.invoke(value)?.takeIf { !it.isNaN() }
 }
