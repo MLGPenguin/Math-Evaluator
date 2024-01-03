@@ -153,4 +153,13 @@ public class EvaluatorTest {
         assertEqualsInt("6%4", 2);
         assertEqualsDouble("6.5%4", 2.5);
     }
+
+    @Test
+    public void round() {
+        assertEqualsInt("round(3.5)", 4);
+        assertEqualsInt("round(3.2)", 3);
+        assertEqualsInt("round(3.6)", 4);
+        assertEqualsInt("round(-3.5)", -4);
+        assertEqualsInt("round(-3.4)", -3);
+    }
 }

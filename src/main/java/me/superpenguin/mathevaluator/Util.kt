@@ -46,6 +46,7 @@ internal object Util {
         "ceil" to ::ceil,
         "absolute" to ::abs,
         "abs" to ::abs,
+        "round" to ::round,
     )
 
     fun parsePrefixFunction(function: String, value: Double): Double? = prefixFunctions[function]?.invoke(value)
