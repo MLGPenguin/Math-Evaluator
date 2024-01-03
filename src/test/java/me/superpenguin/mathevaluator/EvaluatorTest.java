@@ -143,4 +143,14 @@ public class EvaluatorTest {
         assertEqualsInt("4!/2", 12);
         assertEqualsInt("10^2!", 100);
     }
+
+    @Test
+    public void modulo() {
+        assertEqualsInt("6%3", 0);
+        assertEqualsInt("6%6", 0);
+        assertEqualsInt("6%2", 0);
+        assertEqualsInt("6%4", 2);
+        assertEqualsInt("6%4", 2);
+        assertEqualsDouble("6.5%4", 2.5);
+    }
 }

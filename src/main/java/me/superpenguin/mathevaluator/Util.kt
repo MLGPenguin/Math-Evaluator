@@ -3,7 +3,7 @@ package me.superpenguin.mathevaluator
 import kotlin.math.*
 
 internal object Util {
-    private const val OPERATORS = "-\\+*/\\^"
+    private const val OPERATORS = "-\\+*/\\^%"
     private const val NUMBER = "-?[0-9]+\\.?[0-9]*"
 
     private val NUMBER_REGEX = Regex(NUMBER)
@@ -45,7 +45,7 @@ internal object Util {
         "floor" to ::floor,
         "ceil" to ::ceil,
         "absolute" to ::abs,
-        "abs" to ::abs
+        "abs" to ::abs,
     )
 
     fun parsePrefixFunction(function: String, value: Double): Double? = prefixFunctions[function]?.invoke(value)
