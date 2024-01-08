@@ -2,6 +2,8 @@ package me.superpenguin.mathevaluator;
 
 public class Value {
 
+    private static final double RECOMMENDED_DELTA = 5E-16;
+
     private double val;
 
     public Value(int val){
@@ -16,6 +18,16 @@ public class Value {
     public int intValue() { return (int)val; }
     public int roundToInt() { return (int) Math.round(val); }
     public double doubleValue(){ return val; }
+
+    /**
+     * Checks if the value is equal too, or within the provided delta of this value.
+     * @param number The number to compare this value to
+     * @param delta The accepted variance between this value and the other number.
+     * @return true if this value is within the provided delta of the other number.
+     */
+    public boolean almostEquals(double number, double delta) {
+        return val == number || Math.abs(val-number) < delta;
+    }
 
     @Override
     public String toString(){

@@ -123,6 +123,15 @@ public class EvaluatorTest {
     public void assertEqualsDouble(String expression, double outcome) { assertEquals(eval(expression).doubleValue(), outcome, DELTA); }
     public void assertEqualsInt(String exp, int outcome) { assertEquals(eval(exp).intValue(), outcome); }
 
+    private static final double FINE_DELTA = 1E-15;
+
+    @Test
+    public void testDoublePrecision() {
+        assertTrue(eval("sin(pi/6)").almostEquals(0.5, FINE_DELTA));
+        assertTrue(eval("sin(rad(30))").almostEquals(0.5, FINE_DELTA));
+        assertTrue(eval("8sin(pi/6)").almostEquals(4.0, FINE_DELTA));
+    }
+
     @Test
     public void testPrefixFunctionsAdvanced() {
         assertEqualsDouble("-2.5^cos(-3^1-1+4sin(pi/2))", -2.5);
