@@ -13,7 +13,7 @@ dependencies {
 
 
 group = "me.superpenguin"
-version = "1.2.2"
+version = "1.2.3"
 description = "Evaluates mathematical expressions using regex"
 
 publishing {
