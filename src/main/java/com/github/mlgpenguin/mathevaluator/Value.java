@@ -29,6 +29,9 @@ public class Value {
         return val == number || Math.abs(val-number) < delta;
     }
 
+    /** @see #almostEquals(double, double) */
+    public boolean almostEquals(int number, double delta) { return almostEquals(Double.valueOf(number), delta); }
+
     @Override
     public String toString(){
         if (isInt()) return String.valueOf(intValue());
