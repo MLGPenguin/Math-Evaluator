@@ -1,4 +1,4 @@
-package me.superpenguin.mathevaluator
+package com.github.mlgpenguin.mathevaluator
 
 import kotlin.math.*
 

@@ -12,8 +12,8 @@ dependencies {
 }
 
 
-group = "me.superpenguin"
-version = "1.2.3"
+group = "com.github.mlgpenguin"
+version = "1.2.4"
 description = "Evaluates mathematical expressions using regex"
 
 publishing {
