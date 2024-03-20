@@ -177,4 +177,11 @@ public class EvaluatorTest {
         assertThrows(Evaluator.InvalidSyntaxException.class, () -> eval("sqrt(-1)"));
         assertThrows(Evaluator.InvalidSyntaxException.class, () -> eval("sqrt(1-2)"));
     }
+
+    @Test
+    public void testRandomThingsThatMayOrMayNotHaveOnceNotWorked() {
+        assertEqualsInt("4 + ((0.1 + 0.2) - 0.3)", 4);
+    }
+
+
 }

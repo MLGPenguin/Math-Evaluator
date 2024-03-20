@@ -35,7 +35,12 @@ public class Value {
     @Override
     public String toString(){
         if (isInt()) return String.valueOf(intValue());
+        else if (isWithinDeltaOfWholeNumber(RECOMMENDED_DELTA)) return String.valueOf(roundToInt());
         else return String.valueOf(doubleValue());
+    }
+
+    private boolean isWithinDeltaOfWholeNumber(double delta) {
+        return Math.abs(val % 1) < delta || 1 - Math.abs(val % 1) < delta;
     }
 
 }
