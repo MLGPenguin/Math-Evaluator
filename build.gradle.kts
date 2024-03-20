@@ -13,13 +13,14 @@ dependencies {
 
 
 group = "com.github.mlgpenguin"
-version = "1.2.5"
+version = "1.2.6"
 description = "Evaluates mathematical expressions using regex"
 
 publishing {
     publications.create<MavenPublication>("maven") {
         from(components["java"])
-        artifactId = "math-evaluator"
+        groupId = group as String
+        artifactId = "MathEvaluator"
     }
 }
 

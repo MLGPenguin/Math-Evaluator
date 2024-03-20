@@ -1,1 +1,1 @@
-rootProject.name = "math-evaluator"
+rootProject.name = "MathEvaluator"
