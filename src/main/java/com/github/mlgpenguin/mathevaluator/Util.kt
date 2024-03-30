@@ -47,6 +47,7 @@ internal object Util {
         "absolute" to ::abs,
         "abs" to ::abs,
         "round" to ::round,
+        "log" to ::log10
     )
 
     fun parsePrefixFunction(function: String, value: Double): Double? = prefixFunctions[function]?.invoke(value)?.takeIf { !it.isNaN() }
