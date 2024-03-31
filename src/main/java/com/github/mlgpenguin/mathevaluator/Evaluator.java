@@ -53,7 +53,7 @@ public class Evaluator {
             case "+": val = a1+a2; break;
             case "-": val = a1-a2; break;
             case "*": val = a1*a2; break;
-            case "/": val = a1/a2; break;
+            case "/": val = a2 == 0 ?  0 : a1/a2; break;
             case "^": val = Math.pow(a1, a2); break;
             case "%": val = a1%a2; break;
             default: val = 0;
