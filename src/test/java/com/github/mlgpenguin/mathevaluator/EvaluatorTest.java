@@ -179,8 +179,17 @@ public class EvaluatorTest {
     }
 
     @Test
+    public void testModulos() {
+        assertEqualsInt("10 % 3", 1);
+        assertTrue(Evaluator.isValidSyntax("10% 3"));
+    }
+
+    @Test
     public void testRandomThingsThatMayOrMayNotHaveOnceNotWorked() {
         assertEqualsInt("4 + ((0.1 + 0.2) - 0.3)", 4);
+        assertEqualsInt("10/0", 0);
+        assertEqualsInt("(8 ^ 2 - 7 ^ 2 -1) /2", 7);
+
     }
 
 

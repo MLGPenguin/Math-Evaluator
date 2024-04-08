@@ -17,6 +17,7 @@ public class Evaluator {
     private static final Util util = Util.INSTANCE;
 
     private static final String NUMBER_REGEX = "-?[0-9]+\\.?[0-9]*";
+    private static final String NON_STEALING_NUM_REGEX = "(?:(?<=^|[*^%/+\\-(^])-)?[0-9]+\\.?[0-9]*";
 
     /**
      *
@@ -53,7 +54,7 @@ public class Evaluator {
             case "+": val = a1+a2; break;
             case "-": val = a1-a2; break;
             case "*": val = a1*a2; break;
-            case "/": val = a2 == 0 ?  0 : a1/a2; break;
+            case "/": val = a2 == 0 ? 0 : a1/a2; break;
             case "^": val = Math.pow(a1, a2); break;
             case "%": val = a1%a2; break;
             default: val = 0;
@@ -66,7 +67,7 @@ public class Evaluator {
     }
 
     private static String calculate(String expression, String operators){
-        Pattern p = Pattern.compile("(" + NUMBER_REGEX + ")(" + operators + ")(" + NUMBER_REGEX + ")");
+        Pattern p = Pattern.compile("(" + NON_STEALING_NUM_REGEX + ")(" + operators + ")(" + NUMBER_REGEX + ")");
         Matcher m = p.matcher(expression);
         while (m.find()){
             expression = m.replaceFirst(operate(m));
