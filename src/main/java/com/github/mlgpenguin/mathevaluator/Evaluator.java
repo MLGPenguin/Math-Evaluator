@@ -16,8 +16,8 @@ public class Evaluator {
 
     private static final Util util = Util.INSTANCE;
 
-    private static final String NUMBER_REGEX = "-?[0-9]+\\.?[0-9]*";
-    private static final String NON_STEALING_NUM_REGEX = "(?:(?<=^|[*^%/+\\-(^])-)?[0-9]+\\.?[0-9]*";
+    private static final String NUMBER_REGEX = "-?[0-9]+(?:\\.[0-9]+)?";
+    private static final String NON_STEALING_NUM_REGEX = "(?:(?<=^|[*^%/+\\-(^])-)?[0-9]+(?:\\.[0-9]+)?";
 
     /**
      *
