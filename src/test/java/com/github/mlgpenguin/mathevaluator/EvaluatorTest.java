@@ -1,12 +1,16 @@
 package com.github.mlgpenguin.mathevaluator;
 
+import com.github.mlgpenguin.mathevaluator.tokeniser.Tokeniser;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
 public class EvaluatorTest {
 
-    public Value eval(String exp) { return Evaluator.eval(exp); }
+    public Value eval(String exp) {
+        return Evaluator.eval(exp);
+    }
+
     
     private static final double DELTA = 0.0001;
 
@@ -174,8 +178,8 @@ public class EvaluatorTest {
 
     @Test
     public void invalidPrefixFunctionExpressions() {
-        assertThrows(Evaluator.InvalidSyntaxException.class, () -> eval("sqrt(-1)"));
-        assertThrows(Evaluator.InvalidSyntaxException.class, () -> eval("sqrt(1-2)"));
+        assertThrows(Tokeniser.InvalidParserOperationException.class, () -> eval("sqrt(-1)"));
+        assertThrows(Tokeniser.InvalidParserOperationException.class, () -> eval("sqrt(1-2)"));
     }
 
     @Test
@@ -185,12 +189,20 @@ public class EvaluatorTest {
     }
 
     @Test
+    public void testLogs() {
+        assertEqualsInt("log(10)", 1);
+        assertEqualsInt("log(10^5)", 5);
+        assertEqualsInt("log(10^9)", 9);
+        assertEqualsInt("log(10^10)", 10);
+        assertEqualsInt("log(0.1)", -1);
+    }
+
+    @Test
     public void testRandomThingsThatMayOrMayNotHaveOnceNotWorked() {
         assertEqualsInt("4 + ((0.1 + 0.2) - 0.3)", 4);
         assertEqualsInt("10/0", 0);
         assertEqualsInt("(8 ^ 2 - 7 ^ 2 -1) /2", 7);
-
+        assertEqualsInt("(log(10^9) + sqrt(49))/2", 8);
+        assertEqualsInt("log(10^9)+2cos(rad(0))", 11);
     }
-
-
 }

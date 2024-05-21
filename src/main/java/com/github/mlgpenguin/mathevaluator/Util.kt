@@ -2,8 +2,8 @@ package com.github.mlgpenguin.mathevaluator
 
 import kotlin.math.*
 
-internal object Util {
-    private const val OPERATORS = "-\\+*/\\^%"
+object Util {
+    private const val OPERATORS = "\\-\\+*\\/\\^%"
     private const val NUMBER = "-?[0-9]+\\.?[0-9]*"
 
     private val NUMBER_REGEX = Regex(NUMBER)
@@ -29,10 +29,12 @@ internal object Util {
         .replace(NUMBER_BEFORE_EXPRESSION_REGEX, "$1*$2")
         .replace("+-", "-")
         .replace("pi", Math.PI.toString())
+        .replace(Regex("log\\(10\\^($NUMBER_REGEX)\\)"), "$1")
         .let { exp -> FACTORIAL_REGEX.replace(exp) { it.groupValues[1].toInt().factorial.toString() } }
 
 
     // Cannot contain "pi"
+    // Make sure abbreviations are posted in descending order such that the smallest match is lower.
     private val prefixFunctions: Map<String, (Double) -> Double> = mapOf(
         "radians" to Math::toRadians,
         "rad" to Math::toRadians,
@@ -50,5 +52,36 @@ internal object Util {
         "log" to ::log10
     )
 
+    fun getPrefixFunctionByName(name: String) = prefixFunctions[name]
+
     fun parsePrefixFunction(function: String, value: Double): Double? = prefixFunctions[function]?.invoke(value)?.takeIf { !it.isNaN() }
+
+
+    /**
+     * The first letter of the expression string should be the prefix function you want to parse
+     * @return the expression inside of the given prefix function
+     */
+    fun getPrefixExpression(exp: String): String {
+        val builder = StringBuilder()
+        var opened = 0
+        var hasStarted = false
+        for (car in exp) {
+            if (car in 'a'..'z' && !hasStarted) continue
+            if (car == '(') {
+                hasStarted = true
+                opened++
+            } else if (car == ')') {
+                opened--
+            }
+            builder.append(car)
+            if (opened == 0 && hasStarted) break
+        }
+        return builder.toString().substring(1, builder.length-1)
+    }
+
+    class InvalidSyntaxException : RuntimeException {
+        constructor(msg: String?) : super(msg)
+        constructor() : super("")
+    }
+
 }
