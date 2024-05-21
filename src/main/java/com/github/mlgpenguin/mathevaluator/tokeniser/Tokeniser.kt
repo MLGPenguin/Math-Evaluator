@@ -43,7 +43,7 @@ object Tokeniser {
         }
     }
 
-    val precedences = listOf(
+    private val precedences = listOf(
         listOf(Operator.EXPONENT),
         listOf(Operator.MODULO),
         listOf(Operator.MULTIPLY, Operator.DIVIDE),
