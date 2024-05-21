@@ -54,30 +54,7 @@ object Util {
 
     fun getPrefixFunctionByName(name: String) = prefixFunctions[name]
 
-    fun parsePrefixFunction(function: String, value: Double): Double? = prefixFunctions[function]?.invoke(value)?.takeIf { !it.isNaN() }
 
-
-    /**
-     * The first letter of the expression string should be the prefix function you want to parse
-     * @return the expression inside of the given prefix function
-     */
-    fun getPrefixExpression(exp: String): String {
-        val builder = StringBuilder()
-        var opened = 0
-        var hasStarted = false
-        for (car in exp) {
-            if (car in 'a'..'z' && !hasStarted) continue
-            if (car == '(') {
-                hasStarted = true
-                opened++
-            } else if (car == ')') {
-                opened--
-            }
-            builder.append(car)
-            if (opened == 0 && hasStarted) break
-        }
-        return builder.toString().substring(1, builder.length-1)
-    }
 
     class InvalidSyntaxException : RuntimeException {
         constructor(msg: String?) : super(msg)
