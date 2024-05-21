@@ -49,16 +49,15 @@ object Util {
         "absolute" to ::abs,
         "abs" to ::abs,
         "round" to ::round,
-        "log" to ::log10
+        "log" to ::log10,
+        "ln" to ::ln
     )
 
     fun getPrefixFunctionByName(name: String) = prefixFunctions[name]
 
 
 
-    class InvalidSyntaxException : RuntimeException {
-        constructor(msg: String?) : super(msg)
-        constructor() : super("")
+    class InvalidSyntaxException() : RuntimeException("") {
     }
 
 }
