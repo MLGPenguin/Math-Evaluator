@@ -27,7 +27,7 @@ object Tokeniser {
                     else break
                 }
                 if (numString == "-") throw InvalidParserOperationException("Found negative (-) symbol in unexpected location")
-                if (numString.length > 616) throw InvalidParserOperationException("Number is too large!")
+                if (numString.length > 621) throw InvalidParserOperationException("Number is too large!")
                 // TODO: Check that it doesn't exceed precision / size restraints
                 return ValueToken(numString.toDouble())
             }

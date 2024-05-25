@@ -8,7 +8,7 @@ object Util {
 
     private val FACTORIAL_REGEX = Regex("(\\d+)!")
     // letters, consecutive operators, operators closing brackets and ending strings. Also numbers greater than 600 characters or with more than 15 decimals
-    private val INVALID_FORMAT = Regex("(?i)[^\\d$OPERATORS().]|[.+*/]{2,}|[$OPERATORS]$|[$OPERATORS][)]|^[.+*/)]|-{3,}|\\d{600,}|\\d+\\.\\d{15,}")
+    private val INVALID_FORMAT = Regex("(?i)[^\\d$OPERATORS().]|[.+*/]{2,}|[$OPERATORS]$|[$OPERATORS][)]|^[.+*/)]|-{3,}|[\\d.]{600,}")
 
     fun isValidSyntax(expression: String): Boolean {
         val withoutPrefixes = prefixFunctions.keys.fold(expression.lowercase()) { acc, value -> acc.replace(value, "") }
@@ -16,11 +16,13 @@ object Util {
         return !INVALID_FORMAT.containsMatchIn(sanitised) && sanitised.count { it == '(' } == sanitised.count { it == ')' }
     }
 
-    private val NUMBER_BEFORE_EXPRESSION_REGEX = Regex("(?i)($NUMBER_REGEX)([a-z(])")
+    private val NUMBER_BEFORE_EXPRESSION_REGEX = Regex("($NUMBER_REGEX)([a-z(])")
     private val EXACTLY_TWO_DASHES = Regex("(?<!-)--(?!-)")
 
     private val Int.factorial get() = if (this == 0) 1 else (1..this).fold(1) { acc, value -> acc * value }
 
+
+    // TODO: replaceIf
     fun sanitise(expression: String) = expression
         .lowercase()
         .replace(" ", "")
