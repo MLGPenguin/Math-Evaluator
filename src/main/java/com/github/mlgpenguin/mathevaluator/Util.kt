@@ -4,12 +4,11 @@ import kotlin.math.*
 
 object Util {
     private const val OPERATORS = "\\-\\+*\\/\\^%"
-    private const val NUMBER = "-?[0-9]+\\.?[0-9]*"
+    private val NUMBER_REGEX = Regex("-?\\d+(?:\\.\\d+)?")
 
-    private val NUMBER_REGEX = Regex(NUMBER)
-    private val FACTORIAL_REGEX = Regex("([0-9]+)!")
-    // letters, consecutive operators, operators closing brackets and ending strings
-    private val INVALID_FORMAT = Regex("(?i)[^\\d$OPERATORS().]|[.+*/]{2,}|[$OPERATORS]$|[$OPERATORS][)]|^[.+*/)]|-{3,}")
+    private val FACTORIAL_REGEX = Regex("(\\d+)!")
+    // letters, consecutive operators, operators closing brackets and ending strings. Also numbers greater than 600 characters or with more than 15 decimals
+    private val INVALID_FORMAT = Regex("(?i)[^\\d$OPERATORS().]|[.+*/]{2,}|[$OPERATORS]$|[$OPERATORS][)]|^[.+*/)]|-{3,}|\\d{600,}|\\d+\\.\\d{15,}")
 
     fun isValidSyntax(expression: String): Boolean {
         val withoutPrefixes = prefixFunctions.keys.fold(expression.lowercase()) { acc, value -> acc.replace(value, "") }
