@@ -147,5 +147,5 @@ object Tokeniser {
         return NestedToken(tokenise(exp)).value
     }
 
-    fun evaluateValue(expression: String) = Value(evaluate(expression))
+    fun evaluateValue(expression: String): Value = Value(evaluate(expression))
 }

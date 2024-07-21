@@ -10,7 +10,6 @@ public class EvaluatorTest {
     public Value eval(String exp) {
         return Evaluator.eval(exp);
     }
-
     
     private static final double DELTA = 0.0001;
 
@@ -125,7 +124,7 @@ public class EvaluatorTest {
     }
 
     public void assertEqualsDouble(String expression, double outcome) { assertEquals(eval(expression).doubleValue(), outcome, DELTA); }
-    public void assertEqualsInt(String exp, int outcome) { assertEquals(eval(exp).intValue(), outcome); }
+    public void assertEqualsInt(String exp, int outcome) { assertEquals(outcome, eval(exp).intValue()); }
 
     private static final double FINE_DELTA = 1E-15;
 
@@ -204,7 +203,15 @@ public class EvaluatorTest {
         assertEqualsInt("(8 ^ 2 - 7 ^ 2 -1) /2", 7);
         assertEqualsInt("(log(10^9) + sqrt(49))/2", 8);
         assertEqualsInt("log(10^9)+2cos(rad(0))", 11);
+        assertEqualsInt("4.1-0.1", 4);
+        assertEqualsInt("15.99999999999999999999999999999999999", 15);
     }
+
+    @Test
+    public void testSub() {
+
+    }
+
 
     @Test
     public void testLongNumbers() {
