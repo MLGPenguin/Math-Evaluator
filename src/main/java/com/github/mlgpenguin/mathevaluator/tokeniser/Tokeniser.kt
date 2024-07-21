@@ -9,7 +9,7 @@ object Tokeniser {
 
     class InvalidParserOperationException(error: String): RuntimeException("Unsupported operation: $error")
 
-    abstract class Token() {
+    abstract class Token {
         abstract val value: BigDecimal
     }
 
@@ -107,7 +107,7 @@ object Tokeniser {
 
     }
 
-    class PrefixFunctionToken(val function: (Double) -> Double, val innerTokens: NestedToken): Token() {
+    class PrefixFunctionToken(function: (Double) -> Double, innerTokens: NestedToken): Token() {
         override val value: BigDecimal = BigDecimal(function.invoke((innerTokens.value.toDouble())).takeIf { !it.isNaN() } ?: throw InvalidParserOperationException("Unexpected input $innerTokens on $function"))
 
 

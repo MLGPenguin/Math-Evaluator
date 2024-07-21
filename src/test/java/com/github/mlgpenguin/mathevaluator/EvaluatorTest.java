@@ -130,8 +130,6 @@ public class EvaluatorTest {
     public void assertEqualsDouble(String expression, double outcome) { assertEquals(outcome, eval(expression).doubleValue(), DELTA); }
     public void assertEqualsInt(String exp, int outcome) { assertEquals(outcome, eval(exp).intValue()); }
 
-    private static final double FINE_DELTA = 1E-15;
-
     @Test
     public void testDoublePrecision() {
         assertEqualsDouble("sin(pi/6)", 0.5);

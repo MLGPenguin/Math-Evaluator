@@ -56,6 +56,6 @@ object Util {
 
     fun getPrefixFunctionByName(name: String) = prefixFunctions[name]
 
-    class InvalidSyntaxException() : RuntimeException("") {}
+    class InvalidSyntaxException : RuntimeException("")
 
 }
