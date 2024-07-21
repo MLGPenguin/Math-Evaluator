@@ -207,6 +207,7 @@ public class EvaluatorTest {
         assertEqualsInt("log(10^9)+2cos(rad(0))", 11);
         assertEqualsInt("4.1-0.1", 4);
         assertEqualsInt("15.99999999999999999999999999999999999", 15);
+        assertEqualsInt(" (1*1024/1024*2)^2/2", 2);
     }
 
 
