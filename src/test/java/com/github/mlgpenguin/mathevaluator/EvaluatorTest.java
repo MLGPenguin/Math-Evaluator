@@ -3,6 +3,7 @@ package com.github.mlgpenguin.mathevaluator;
 import com.github.mlgpenguin.mathevaluator.tokeniser.Tokeniser;
 import org.junit.Test;
 
+import static java.lang.Math.sqrt;
 import static org.junit.Assert.*;
 
 public class EvaluatorTest {
@@ -11,7 +12,7 @@ public class EvaluatorTest {
         return Evaluator.eval(exp);
     }
     
-    private static final double DELTA = 0.0001;
+    private static final double DELTA = 5E-15;
 
     @Test
     public void testSimpleIntExpressionsWithAdditionAndSubtraction() {
@@ -27,6 +28,8 @@ public class EvaluatorTest {
     public void testSimpleIntMultiplicationAndDivision() {
         assertEquals(eval("3 * 4").intValue(), 12);
         assertEquals(eval(" 3 * 4 / 2").intValue(), 6);
+        assertEqualsDouble("1/3", 1/3.0);
+        assertEqualsDouble("1/2", 0.5);
     }
 
     @Test
@@ -121,18 +124,19 @@ public class EvaluatorTest {
         assertEqualsInt("ceil(pi)", 4);
         assertEqualsInt("CeIl(389.3)", 390);
         assertEqualsInt("abs(-3)", 3);
+        assertEqualsDouble("sin(pi/4)", sqrt(2)/2.0);
     }
 
-    public void assertEqualsDouble(String expression, double outcome) { assertEquals(eval(expression).doubleValue(), outcome, DELTA); }
+    public void assertEqualsDouble(String expression, double outcome) { assertEquals(outcome, eval(expression).doubleValue(), DELTA); }
     public void assertEqualsInt(String exp, int outcome) { assertEquals(outcome, eval(exp).intValue()); }
 
     private static final double FINE_DELTA = 1E-15;
 
     @Test
     public void testDoublePrecision() {
-        assertTrue(eval("sin(pi/6)").almostEquals(0.5, FINE_DELTA));
-        assertTrue(eval("sin(rad(30))").almostEquals(0.5, FINE_DELTA));
-        assertTrue(eval("8sin(pi/6)").almostEquals(4.0, FINE_DELTA));
+        assertEqualsDouble("sin(pi/6)", 0.5);
+        assertEqualsDouble("sin(rad(30))", 0.5);
+        assertEqualsDouble("8sin(pi/6)", 4.0);
     }
 
     @Test
@@ -207,11 +211,6 @@ public class EvaluatorTest {
         assertEqualsInt("15.99999999999999999999999999999999999", 15);
     }
 
-    @Test
-    public void testSub() {
-
-    }
-
 
     @Test
     public void testLongNumbers() {
@@ -219,5 +218,12 @@ public class EvaluatorTest {
         String longnum = "208745077642022740063014676694947065126382803378847604657199488867937869825770354356124835173.85382206559145136327243854777683715060494527822185337669356603655024225363701866511320867887861285265888268763943569807229730792183420511505535889191180132771677479920029234335697859418904484883280646965656152388845338444914516933489593642730494085118899235411019216857173329818808872266121865387041336498852087450776420227400630146766949470651263828033788476046571994888679378698257703543561248351738538220655914513632724385477768371506049452782218533766935660365502422536370186651132086788786128526588826876394356980722973079218342051150553588919118013277167747992002923433569785941890448488328064696565615238884533844491451693348959364273049408511889923541101921685717332981880887226612186538704133649885";
         assertEqualsDouble(foursixty + "*2", Double.parseDouble(foursixty) * 2);
         assertThrows(Util.InvalidSyntaxException.class, () -> eval(longnum +"*3"));
+    }
+
+    @Test
+    public void testToString() {
+        assertEquals("1", eval("1").toString());
+        assertEquals("4", eval("4.1-0.1").toString());
+        assertEquals("5.5", eval("5 + 0.5").toString());
     }
 }

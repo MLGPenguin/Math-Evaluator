@@ -2,6 +2,7 @@ package com.github.mlgpenguin.mathevaluator.tokeniser
 
 import com.github.mlgpenguin.mathevaluator.Util
 import com.github.mlgpenguin.mathevaluator.Value
+import java.math.BigDecimal
 import java.util.*
 
 object Tokeniser {
@@ -9,12 +10,12 @@ object Tokeniser {
     class InvalidParserOperationException(error: String): RuntimeException("Unsupported operation: $error")
 
     abstract class Token() {
-        abstract val value: Double
+        abstract val value: BigDecimal
     }
 
     fun <T> Stack<T>.peekOrNull() = if (this.isEmpty()) null else this.peek()
 
-    class ValueToken(override val value: Double) : Token() {
+    class ValueToken(override val value: BigDecimal) : Token() {
 
         companion object {
             fun read(stack: Stack<Char>): ValueToken {
@@ -28,15 +29,14 @@ object Tokeniser {
                 }
                 if (numString == "-") throw InvalidParserOperationException("Found negative (-) symbol in unexpected location")
                 if (numString.length > 621) throw InvalidParserOperationException("Number is too large!")
-                // TODO: Check that it doesn't exceed precision / size restraints
-                return ValueToken(numString.toDouble())
+                return ValueToken(BigDecimal(numString))
             }
         }
 
     }
 
     class OperatorToken(val operation: Operator): Token() {
-        override val value: Double
+        override val value: BigDecimal
             get() = throw InvalidParserOperationException("Attempted to find value of operator")
 
         companion object {
@@ -54,8 +54,8 @@ object Tokeniser {
     class NestedToken(val tokens: List<Token>): Token() {
         override val value get() = sumTokens()
 
-        private fun sumTokens(): Double {
-            if (tokens.isEmpty()) return 0.0
+        private fun sumTokens(): BigDecimal {
+            if (tokens.isEmpty()) return BigDecimal.ZERO
             if (tokens.size == 1) return tokens[0].value
 
             val operators = mutableListOf<OperatorToken>()
@@ -108,7 +108,7 @@ object Tokeniser {
     }
 
     class PrefixFunctionToken(val function: (Double) -> Double, val innerTokens: NestedToken): Token() {
-        override val value: Double = function.invoke((innerTokens.value)).takeIf { !it.isNaN() } ?: throw InvalidParserOperationException("Unexpected input $innerTokens on $function")
+        override val value: BigDecimal = BigDecimal(function.invoke((innerTokens.value.toDouble())).takeIf { !it.isNaN() } ?: throw InvalidParserOperationException("Unexpected input $innerTokens on $function"))
 
 
         companion object {
@@ -141,11 +141,12 @@ object Tokeniser {
         return tokens
     }
 
-    fun evaluate(expression: String): Double {
+    fun evaluate(expression: String): BigDecimal {
         val exp = Util.sanitise(expression)
         if (!Util.isValidSyntax(exp)) throw Util.InvalidSyntaxException()
         return NestedToken(tokenise(exp)).value
     }
 
+    fun evaluateDouble(exp: String) = evaluate(exp).toDouble()
     fun evaluateValue(expression: String): Value = Value(evaluate(expression))
 }
