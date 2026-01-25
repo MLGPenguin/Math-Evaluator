@@ -1,5 +1,5 @@
 plugins {
-    kotlin("jvm") version "1.7.21"
+    kotlin("jvm") version "2.3.0"
     `maven-publish`
 }
 
@@ -13,7 +13,7 @@ dependencies {
 
 
 group = "com.github.mlgpenguin"
-version = "2.1.1"
+version = "2.1.2"
 description = "Evaluates mathematical expressions using regex"
 
 publishing {
@@ -33,5 +33,5 @@ tasks.withType<Javadoc> {
 }
 
 kotlin {
-    jvmToolchain(17)
+    jvmToolchain(25)
 }
