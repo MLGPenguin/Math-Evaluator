@@ -230,5 +230,9 @@ public class EvaluatorTest {
     public void testBasicBinaryFunctions(){
         assertEqualsInt("1 | 2", 3);
         assertEqualsInt("1 | 2 * 3", 9);
+        assertEqualsInt("1 & 3", 1);
+        assertEqualsInt("1 & 2", 0);
+        assertEqualsInt("1 & 3 & 2", 0);
+        assertEqualsInt("1 & 3 * 4", 4);
     }
 }

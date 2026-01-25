@@ -46,7 +46,7 @@ object Tokeniser {
 
     private val precedences = listOf(
         listOf(Operator.EXPONENT),
-        listOf(Operator.MODULO, Operator.BINARY_OR),
+        listOf(Operator.MODULO, Operator.BINARY_OR, Operator.BINARY_AND),
         listOf(Operator.MULTIPLY, Operator.DIVIDE),
         listOf(Operator.PLUS, Operator.MINUS)
     )

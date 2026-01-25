@@ -11,12 +11,13 @@ enum class Operator(private val operation: (BigDecimal, BigDecimal) -> BigDecima
     EXPONENT({a, b -> a.toDouble().pow(b.toDouble()).toBigDecimal()}), // there are better ways but this'll do
     MODULO({a, b -> a % b}),
     BINARY_OR({a, b -> a.toBigIntegerExact().or(b.toBigIntegerExact()).toBigDecimal() }),
+    BINARY_AND({a, b -> a.toBigIntegerExact().and(b.toBigIntegerExact()).toBigDecimal() }),
     ;
 
     fun execute(a: BigDecimal, b: BigDecimal) = operation.invoke(a, b)
 
     companion object {
-        val symbols = "+-*/^%|".toCharArray()
+        val symbols = "+-*/^%|&".toCharArray()
 
         fun bySymbol(symbol: Char) = when (symbol) {
             '+' -> PLUS
@@ -26,6 +27,7 @@ enum class Operator(private val operation: (BigDecimal, BigDecimal) -> BigDecima
             '^' -> EXPONENT
             '%' -> MODULO
             '|' -> BINARY_OR
+            '&' -> BINARY_AND
             else -> throw IllegalArgumentException("Unknown operator $symbol")
         }
     }
