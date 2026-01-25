@@ -34,61 +34,61 @@ public class EvaluatorTest {
 
     @Test
     public void testComplexIntSyntaxExpressionsAndOrderOfOperations() {
-        assertEquals(eval("3 * 4 + 6 / 2").intValue(), 15);
-        assertEquals(eval("3(4+2)/9").intValue(), 2);
+        assertEquals(15, eval("3 * 4 + 6 / 2").intValue());
+        assertEquals(2, eval("3(4+2)/9").intValue());
     }
 
     @Test
     public void testDoubleAddAndMinus() {
-        assertEquals(eval("3.54 + 54.2").doubleValue(), 57.74, DELTA);
-        assertEquals(eval("50.3+4.6-2.8").doubleValue(), 52.1, DELTA);
+        assertEquals(57.74, eval("3.54 + 54.2").doubleValue(), DELTA);
+        assertEquals(52.1, eval("50.3+4.6-2.8").doubleValue(), DELTA);
     }
 
     @Test
     public void testDoubleTimesAndDivide() {
-        assertEquals(eval("3.5*3").doubleValue(), 10.5, DELTA);
-        assertEquals(eval("2.5*4.0/5").doubleValue(), 2.0, DELTA);
+        assertEquals(10.5, eval("3.5*3").doubleValue(), DELTA);
+        assertEquals(2.0, eval("2.5*4.0/5").doubleValue(), DELTA);
     }
 
     @Test
     public void testDoubleAdvancedSyntax() {
-        assertEquals(eval("2.5(3.5+2.5) + 3.5").doubleValue(), 18.5, DELTA);
+        assertEquals(18.5, eval("2.5(3.5+2.5) + 3.5").doubleValue(), DELTA);
     }
 
     @Test
     public void testNegativeInts() {
-        assertEquals(eval("-3 * 4 + 6 * -8").intValue(), -60);
+        assertEquals(-60, eval("-3 * 4 + 6 * -8").intValue());
     }
 
     @Test
     public void testNegativeDoubles() {
-        assertEquals(eval("-2.5(3.5+2.5) + 2.5").doubleValue(), -12.5, DELTA);
+        assertEquals(-12.5, eval("-2.5(3.5+2.5) + 2.5").doubleValue(), DELTA);
     }
 
     @Test
     public void testExponentInts() {
-        assertEquals(eval("10^3").intValue(), 1000);
-        assertEquals(eval("(-10)^3").intValue(), -1000);
-        assertEquals(eval("6 * 10^3/3").intValue(), 2000);
-        assertEquals(eval("10^-2").doubleValue(), 0.01, DELTA);
+        assertEquals(1000, eval("10^3").intValue());
+        assertEquals(-1000, eval("(-10)^3").intValue());
+        assertEquals(2000, eval("6 * 10^3/3").intValue());
+        assertEquals(0.01, eval("10^-2").doubleValue(), DELTA);
     }
 
     @Test
     public void testExponentDoubles() {
-        assertEquals(eval("2.5^3").doubleValue(), 15.625, DELTA);
-        assertEquals(eval("-3.5*4^2.5+10^-2").doubleValue(), -111.99, DELTA);
+        assertEquals(15.625, eval("2.5^3").doubleValue(), DELTA);
+        assertEquals(-111.99, eval("-3.5*4^2.5+10^-2").doubleValue(), DELTA);
     }
 
     @Test
     public void testNegativeExponents() {
-        assertEquals(eval("3^-2").doubleValue(), 1/9.0, DELTA);
+        assertEquals(1/9.0, eval("3^-2").doubleValue(), DELTA);
     }
 
     @Test
     public void testDoubleNegatives() {
-        assertEquals(eval("-3.5--5").doubleValue(), 1.5, DELTA);
-        assertEquals(eval("-4^(-3--4)").intValue(), -4);
-        assertEquals(eval("50 +- 5").intValue(), 45);
+        assertEquals(1.5, eval("-3.5--5").doubleValue(), DELTA);
+        assertEquals(-4, eval("-4^(-3--4)").intValue());
+        assertEquals(45, eval("50 +- 5").intValue());
     }
 
     private void assertInvalidSyntax(String syntax) { assertFalse(Evaluator.isValidSyntax(syntax)); }
@@ -110,12 +110,12 @@ public class EvaluatorTest {
 
     @Test
     public void testPrefixFunctions() {
-        assertEquals(eval("PI").doubleValue(), Math.PI, DELTA);
-        assertEquals(eval("sin(pi)").intValue(), 0);
-        assertEquals(eval("cos(pi)").intValue(), -1);
-        assertEquals(eval("radians(180)").doubleValue(), Math.PI, DELTA);
-        assertEquals(eval("sin(radians(180))").intValue(), 0);
-        assertEquals(eval("sin(2pi)").intValue(), 0);
+        assertEqualsDouble("PI", Math.PI);
+        assertEqualsInt("sin(pi)", 0);
+        assertEqualsInt("cos(pi)", -1);
+        assertEqualsDouble("radians(180)", Math.PI);
+        assertEqualsInt("sin(radians(180))", 0);
+        assertEqualsInt("sin(2pi)", 0);
         assertEqualsInt("degrees(pi)", 180);
         assertEqualsInt("deg(pi)", 180);
         assertEqualsInt("deg(2pi)", 360);
