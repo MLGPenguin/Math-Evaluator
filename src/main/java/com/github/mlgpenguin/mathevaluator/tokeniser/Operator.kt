@@ -9,13 +9,14 @@ enum class Operator(private val operation: (BigDecimal, BigDecimal) -> BigDecima
     MULTIPLY({a, b -> a * b}),
     DIVIDE({a, b -> if (b == BigDecimal.ZERO) BigDecimal.ZERO else a.divide(b, 16, java.math.RoundingMode.HALF_UP) }),
     EXPONENT({a, b -> a.toDouble().pow(b.toDouble()).toBigDecimal()}), // there are better ways but this'll do
-    MODULO({a, b -> a % b})
+    MODULO({a, b -> a % b}),
+    BINARY_OR({a, b -> a.toBigIntegerExact().or(b.toBigIntegerExact()).toBigDecimal() }),
     ;
 
     fun execute(a: BigDecimal, b: BigDecimal) = operation.invoke(a, b)
 
     companion object {
-        val symbols = "+-*/^%".toCharArray()
+        val symbols = "+-*/^%|".toCharArray()
 
         fun bySymbol(symbol: Char) = when (symbol) {
             '+' -> PLUS
@@ -24,6 +25,7 @@ enum class Operator(private val operation: (BigDecimal, BigDecimal) -> BigDecima
             '/' -> DIVIDE
             '^' -> EXPONENT
             '%' -> MODULO
+            '|' -> BINARY_OR
             else -> throw IllegalArgumentException("Unknown operator $symbol")
         }
     }

@@ -16,18 +16,18 @@ public class EvaluatorTest {
 
     @Test
     public void testSimpleIntExpressionsWithAdditionAndSubtraction() {
-        assertEquals(eval("3+3").intValue(), 6);
-        assertEquals(eval("3 + 3").intValue(), 6);
-        assertEquals(eval("(3+3)").intValue(), 6);
-        assertEquals(eval("3 + (3+3)").intValue(), 9);
-        assertEquals(eval("3 + (3)").intValue(), 6);
-        assertEquals(eval("4 - (3 + 4 - 4) + 4 - 6").intValue(), -1);
+        assertEquals(6, eval("3+3").intValue());
+        assertEquals(6, eval("3 + 3").intValue());
+        assertEquals(6, eval("(3+3)").intValue());
+        assertEquals(9, eval("3 + (3+3)").intValue());
+        assertEquals(6, eval("3 + (3)").intValue());
+        assertEquals(-1, eval("4 - (3 + 4 - 4) + 4 - 6").intValue());
     }
 
     @Test
     public void testSimpleIntMultiplicationAndDivision() {
-        assertEquals(eval("3 * 4").intValue(), 12);
-        assertEquals(eval(" 3 * 4 / 2").intValue(), 6);
+        assertEquals(12, eval("3 * 4").intValue());
+        assertEquals(6, eval(" 3 * 4 / 2").intValue());
         assertEqualsDouble("1/3", 1/3.0);
         assertEqualsDouble("1/2", 0.5);
     }
@@ -224,5 +224,11 @@ public class EvaluatorTest {
         assertEquals("1", eval("1").toString());
         assertEquals("4", eval("4.1-0.1").toString());
         assertEquals("5.5", eval("5 + 0.5").toString());
+    }
+
+    @Test
+    public void testBasicBinaryFunctions(){
+        assertEqualsInt("1 | 2", 3);
+        assertEqualsInt("1 | 2 * 3", 9);
     }
 }
