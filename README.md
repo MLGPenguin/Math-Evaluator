@@ -1,7 +1,7 @@
 # Math-Evaluator
 Evaluates Mathematical expressions from String form.
 
-Supports Addition (+), Subtraction (-),  Multiplication (*), Division (/) and Exponents (^).
+Supports Addition (+), Subtraction (-),  Multiplication (*), Division (/) and Exponents (^) - Also supports basic Binary logic Operators for integers ( | & ).
 Also supports concise (co-efficient style) multiplication ( n(y) == n * y ).
 
 Also supports a range of common prefix functions like `sin(expression)` and so on.
