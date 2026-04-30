@@ -12,22 +12,27 @@ enum class Operator(private val operation: (BigDecimal, BigDecimal) -> BigDecima
     MODULO({a, b -> a % b}),
     BINARY_OR({a, b -> a.toBigIntegerExact().or(b.toBigIntegerExact()).toBigDecimal() }),
     BINARY_AND({a, b -> a.toBigIntegerExact().and(b.toBigIntegerExact()).toBigDecimal() }),
+    RIGHT_SHIFT({a, b -> (a.toBigIntegerExact() shr b.toInt()).toBigDecimal() }),
+    LEFT_SHIFT({a, b -> (a.toBigIntegerExact() shl b.toInt()).toBigDecimal() }),
     ;
 
     fun execute(a: BigDecimal, b: BigDecimal) = operation.invoke(a, b)
 
     companion object {
-        val symbols = "+-*/^%|&".toCharArray()
+        val symbols: Set<String> = setOf("+", "-", "*", "/", "^", "%", "|", "&", ">>", "<<")
+        val firstChars: Set<Char> = symbols.map { it[0] }.toSet()
 
-        fun bySymbol(symbol: Char) = when (symbol) {
-            '+' -> PLUS
-            '-' -> MINUS
-            '*' -> MULTIPLY
-            '/' -> DIVIDE
-            '^' -> EXPONENT
-            '%' -> MODULO
-            '|' -> BINARY_OR
-            '&' -> BINARY_AND
+        fun bySymbol(symbol: String) = when (symbol) {
+            "+"  -> PLUS
+            "-"  -> MINUS
+            "*"  -> MULTIPLY
+            "/"  -> DIVIDE
+            "^"  -> EXPONENT
+            "%"  -> MODULO
+            "|"  -> BINARY_OR
+            "&"  -> BINARY_AND
+            ">>" -> RIGHT_SHIFT
+            "<<" -> LEFT_SHIFT
             else -> throw IllegalArgumentException("Unknown operator $symbol")
         }
     }

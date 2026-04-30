@@ -40,13 +40,23 @@ object Tokeniser {
             get() = throw InvalidParserOperationException("Attempted to find value of operator")
 
         companion object {
-            fun byTopSymbol(stack: Stack<Char>) = OperatorToken(Operator.bySymbol(stack.pop()))
+            fun byTopSymbol(stack: Stack<Char>): OperatorToken {
+                val first = stack.pop()
+                if (stack.isNotEmpty()) {
+                    val twoChar = "$first${stack.peek()}"
+                    if (twoChar in Operator.symbols) {
+                        stack.pop()
+                        return OperatorToken(Operator.bySymbol(twoChar))
+                    }
+                }
+                return OperatorToken(Operator.bySymbol(first.toString()))
+            }
         }
     }
 
     private val precedences = listOf(
         listOf(Operator.EXPONENT),
-        listOf(Operator.MODULO, Operator.BINARY_OR, Operator.BINARY_AND),
+        listOf(Operator.MODULO, Operator.BINARY_OR, Operator.BINARY_AND, Operator.RIGHT_SHIFT, Operator.LEFT_SHIFT),
         listOf(Operator.MULTIPLY, Operator.DIVIDE),
         listOf(Operator.PLUS, Operator.MINUS)
     )
@@ -133,7 +143,7 @@ object Tokeniser {
         while (stack.isNotEmpty()) {
             val next = stack.peek()
             if ( next in '0'..'9' || (next == '-' && tokens.last() is OperatorToken) ) tokens += ValueToken.read(stack)
-            else if ( next in Operator.symbols ) tokens += OperatorToken.byTopSymbol(stack)
+            else if ( next in Operator.firstChars ) tokens += OperatorToken.byTopSymbol(stack)
             else if ( next == '(' ) tokens += NestedToken.read(stack)
             else if ( next in 'a'..'z' ) tokens += PrefixFunctionToken.read(stack)
             else throw InvalidParserOperationException("Unexpected character in stack! ($next)")

@@ -240,4 +240,14 @@ public class EvaluatorTest {
     public void testFractionalParts() {
         assertEqualsDouble("9*(1+(1/3))", 12);
     }
+
+    @Test
+    public void testShiftOperators() {
+        assertEqualsInt("8>>1/4", 1);
+        assertEqualsInt("8 >> 2", 2);
+        assertEqualsInt("1 << 3", 8);
+        assertEqualsInt("2 << 2", 8);
+        assertEqualsInt("(2 + 2) << 1", 8);
+        assertEqualsInt("16 >> 2 + 1", 5); // >> has higher precedence than +, so: (16>>2)+1 = 4+1 = 5
+    }
 }

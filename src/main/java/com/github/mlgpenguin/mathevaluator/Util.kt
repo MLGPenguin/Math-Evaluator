@@ -3,7 +3,7 @@ package com.github.mlgpenguin.mathevaluator
 import kotlin.math.*
 
 object Util {
-    private const val OPERATORS = "\\-\\+*\\/\\^%|&"
+    private const val OPERATORS = "\\-\\+*\\/\\^%|&><"
     private val NUMBER_REGEX = Regex("-?\\d+(?:\\.\\d+)?")
 
     private val FACTORIAL_REGEX = Regex("(\\d+)!")

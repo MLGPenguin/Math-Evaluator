@@ -13,7 +13,6 @@ dependencies {
 
 
 group = "com.github.mlgpenguin"
-version = "2.1.4"
 description = "Evaluates mathematical expressions using regex"
 
 publishing {
