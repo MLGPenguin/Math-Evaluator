@@ -32,5 +32,5 @@ tasks.withType<Javadoc> {
 }
 
 kotlin {
-    jvmToolchain(25)
+    jvmToolchain(17)
 }
