@@ -208,6 +208,9 @@ public class EvaluatorTest {
         assertEqualsInt("4.1-0.1", 4);
         assertEqualsInt("15.99999999999999999999999999999999999", 15);
         assertEqualsInt(" (1*1024/1024*2)^2/2", 2);
+        assertEqualsInt("484^0.5 & 2744^(1/3)", 6); // & is not reading the latter as an integer.
+        assertEqualsInt("2744^(1/3) & 2744^(1/3)", 14); // & is not reading the former as an integer.
+        assertThrows(ArithmeticException.class, () -> eval("13.5 & 3"));
     }
 
 
